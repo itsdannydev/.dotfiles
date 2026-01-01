@@ -12,7 +12,8 @@ The goal of this repo is not to be a “one-size-fits-all” setup, but a **pers
 
 At the moment, this repository contains **only my Neovim configuration**. Other configs may be added later.
 
----
+> Note: This setup is currently tested only on Linux. Other platforms may require adjustments.
+
 
 ## What’s inside (currently)
 
