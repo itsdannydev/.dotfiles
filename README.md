@@ -1,3 +1,5 @@
+![Dotfiles banner](assets/banner.png)
+
 # Dotfiles
 
 This repository contains my personal **dotfiles** — configuration files that define how my development environment behaves.
