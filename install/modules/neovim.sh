@@ -8,16 +8,20 @@ fi
 
 echo "Installing Neovim config..."
 
-NVIM_CONFIG_DIR="$HOME/.config/nvim"
-SOURCE_DIR="$DOTFILES_DIR/nvim"
+NVIM_CONFIG_DIR="$CONFIG_DIR/nvim"
+SOURCE_DIR="$DOTFILES_DIR/config/nvim"
 
 # Ensure ~/.config exists
-mkdir -p "$HOME/.config"
+mkdir -p "$CONFIG_DIR"
 
 # Backing up if a neovim config already exists
 if [ -e "$NVIM_CONFIG_DIR" ] && [ ! -L "$NVIM_CONFIG_DIR" ]; then
     echo "Backing up existing config..."
-    mv "$NVIM_CONFIG_DIR" "$NVIM_CONFIG_DIR.backup.$(date +%s)"
+    mkdir -p "$BACKUP_DIR/config"
+    TIMESTAMP="$(date +"%Y-%m-%d_%H-%M-%S")"
+    BACKUP_TARGET="$BACKUP_DIR/config/nvim-$TIMESTAMP"
+    mkdir -p "$BACKUP_TARGET"
+    mv "$NVIM_CONFIG_DIR" "$BACKUP_TARGET"
 fi
 
 # Removing symlink if it exists

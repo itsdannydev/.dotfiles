@@ -9,7 +9,12 @@ ask() {
 echo "Dotfiles installer"
 echo "------------------"
 
+# Global directories
+CONFIG_DIR="$HOME/.config"
+BACKUP_DIR="$HOME/.local/share/dotfiles-backups"
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+mkdir -p "$BACKUP_DIR"
 
 if ask "Install Neovim config?"; then
   source "$DOTFILES_DIR/install/modules/neovim.sh"
