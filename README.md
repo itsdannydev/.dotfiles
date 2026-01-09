@@ -31,26 +31,45 @@ At the moment, this repository contains **only my Neovim configuration**. Other 
 - Neovim (latest stable recommended)
 - Git
 
-### Neovim setup
+### Quick Start
 
 - Clone the repository:
 
   ```bash
   git clone https://github.com/itsdannydev/dotfiles.git
   ```
+- Run the `install.sh` script inside `dotfiles/install`. <br/>
+  The installer uses symbolic links to keep the configuration in sync with this repository.
+  ```bash
+  cd dotfiles/install/
+  ./install.sh
+  ```
+  > During installation, if an existing configuration path already exists:
+  > - any symlink at the target location is removed
+  > - any non-symlink configuration is backed up to `~/.local/share/dotfiles-backups`
 
-- If you have an existing Neovim config, back it up first.
-  Else, skip to next step
-  ```bash
-  mv ~/.config/nvim ~/.config/nvim.backup
-  ```
-- Create a symbolic link so Neovim can pick up the configuration
-  ```bash
-  ln -s ~/dotfiles/nvim ~/.config/nvim
-  ```
-  > Update the source path according to where you did `git clone...` in step 1
-- Start Neovim
-  ```bash
-  nvim
-  ```
+
+<br/><br/>
   Plugins will be installed automatically on first launch
+
+---
+
+## Backups
+
+If the dotfiles were installed using the script, any existing configurations (not symlinks) will be moved to `~/.local/share/dotfiles-backups`.
+I'm not planning to make a script to automate the restoration process as of now, to not overcomplicate things. If the backup directory becomes cluttered over time, a restoration script may be added later.
+
+### Restoring Backups
+
+Backups are stored under `~/.local/share/dotfiles-backups`, grouped by domain and tool.
+
+Current layout:
+- `config/<tool>/<timestamp>/` → backed-up config directories
+- `home/<file>/<timestamp>` → backed-up home dotfiles
+
+To restore manually:
+- Copy the desired backup from:
+  - `config/<tool>/<timestamp>` → `~/.config/<tool>`
+  - `home/<file>/<timestamp>` → `~/<file>`
+
+Existing files, directories, or symlinks should be removed before restoring.
