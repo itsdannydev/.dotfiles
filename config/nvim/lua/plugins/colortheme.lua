@@ -1,6 +1,6 @@
 return {
   'shaunsingh/nord.nvim',
-  lazy = false,
+  lazy = false, -- Load this plugin immediately at startup
   priority = 1000,
   config = function()
     -- Example config in lua
