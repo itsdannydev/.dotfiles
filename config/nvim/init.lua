@@ -38,4 +38,5 @@ require('lazy').setup({
   require 'plugins.colortheme',
   require 'plugins.lualine',
   require 'plugins.autopairs',
+  require 'plugins.bufferline',
 })
