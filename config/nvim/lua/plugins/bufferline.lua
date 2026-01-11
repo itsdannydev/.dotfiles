@@ -78,6 +78,26 @@ return {
 
                 always_show_bufferline = false,
                 auto_toggle_bufferline = true,
+
+                minimum_padding = 1,
+                maximum_padding = 5,
+                maximum_length = 15,
+                sort_by = 'insert_at_end',
+
+            },
+            highlights = {
+                separator = {
+                    fg = '#00fff3',
+                },
+                buffer_selected = {
+                    bold = true,
+                    italic = false
+                },
+                -- separator_selected = {},
+                -- tab_selected = {},
+                -- background = {},
+                -- indicator_selected = {},
+                -- fill = {},
             }
         })
     end

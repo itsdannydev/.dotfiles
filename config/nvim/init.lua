@@ -39,4 +39,5 @@ require('lazy').setup({
   require 'plugins.lualine',
   require 'plugins.autopairs',
   require 'plugins.bufferline',
+  require 'plugins.bufdelete',
 })
