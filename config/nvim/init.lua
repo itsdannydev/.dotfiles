@@ -40,4 +40,5 @@ require('lazy').setup({
   require 'plugins.autopairs',
   require 'plugins.bufferline',
   require 'plugins.bufdelete',
+  require 'plugins.treesitter',
 })
