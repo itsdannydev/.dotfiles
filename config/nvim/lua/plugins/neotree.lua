@@ -7,5 +7,7 @@ return {
        "nvim-tree/nvim-web-devicons", -- optional, but recommended
    },
    lazy = false, -- Loads the plugin immediately at startup 
-    vim.keymap.set('n', '<leader>e', ':Neotree toggle position=left<CR>', { noremap = true, silent = true })
+   config = function()
+       vim.keymap.set('n', '<leader>e', ':Neotree toggle position=left<CR>',{ noremap = true, silent = true })
+   end
 }

@@ -15,7 +15,7 @@ vim.keymap.set('n', '<C-s>', '<cmd> w <CR>', opts)
 vim.keymap.set('n', '<leader>sn', '<cmd>noautocmd w <CR>',opts)
 
 -- quit file
-vim.keymap.set('n', '<C-q>', '<cmd> q <CR>', opts)
+vim.keymap.set('n', '<leader>q', '<cmd> q <CR>', opts)
 
 -- deletes just a single character, without copying into the register
 vim.keymap.set('n', 'x', '"_x', opts)
@@ -40,7 +40,7 @@ vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts)
 vim.keymap.set('n', '<leader>x', function() -- closes current buffer and switches to prev buffer
     require('bufdelete').bufdelete(0,true)
 end, opts)
-vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>>', opts) -- new buffer
+vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', opts) -- new buffer
 
 -- Increment/decrement numbers
 vim.keymap.set('n', '+', '<C-a>', opts) --increment
@@ -98,7 +98,7 @@ vim.keymap.set('n', ']d', function()
 end, { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- Saving and Loading Coding sessions
 vim.keymap.set('n', '<leader>ss', ':mksession! .session.vim<CR>', { noremap = true, silent = false })

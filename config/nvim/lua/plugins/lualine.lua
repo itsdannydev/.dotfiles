@@ -19,7 +19,7 @@ return {
             options = {
                 icons_enabled = true,
                 theme = 'iceberg_dark',
-                theme = custom_theme,
+--                theme = custom_theme,
                 component_separators = { left = '', right = ''},
                 section_separators = { left = '', right = ''},
                 disabled_filetypes = {
