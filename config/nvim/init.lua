@@ -41,4 +41,5 @@ require('lazy').setup({
   require 'plugins.bufferline',
   require 'plugins.bufdelete',
   require 'plugins.treesitter',
+  require 'plugins.autotag',
 })
