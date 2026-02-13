@@ -1,0 +1,175 @@
+#!/usr/bin/env bash
+
+set -e 
+
+
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/hypr"
+STATE_DIR="$CONFIG_DIR/.state"
+THEMES_DIR="$CONFIG_DIR/themes"
+# if state or theme dir doesnt exist, create them
+mkdir -p "$STATE_DIR" "$THEMES_DIR"
+
+# to prevent race conditions.
+# eg: spamming the keybind to change theme or wallpaper may break hyprpaper
+exec 9>"$STATE_DIR/.themectl.lock"
+flock -n 9 || exit 0
+
+CURRENT_FILE_THEME="$STATE_DIR/current_theme"
+CURRENT_WALLPAPER_FILE="$STATE_DIR/current_wallpaper"
+# if current_theme of current_wallpaper doesnt exist, initialize them
+[ -f "$CURRENT_FILE_THEME" ] || echo "cyan" > "$CURRENT_FILE_THEME"
+[ -f "$CURRENT_WALLPAPER_FILE" ] || echo "0" > "$CURRENT_WALLPAPER_FILE"
+
+
+# functions
+read_state(){
+    #read current states
+    read -r curr_theme < "$CURRENT_FILE_THEME"
+    read -r curr_wallpaper < "$CURRENT_WALLPAPER_FILE"
+
+    # theme doesn't exist
+    if [ ! -d "$THEMES_DIR/$curr_theme" ]; then
+        echo "Error: Theme '$curr_theme' does not exist"
+        exit 1
+    fi
+}
+
+get_themes(){
+    # themes=( "$THEMES_DIR"/* )
+    # this will only save the absolute paths to $themes
+    # but we need to strip them so that we can correctly index the next theme
+    # so we will manually append each theme name
+    themes=()
+    for dir in "$THEMES_DIR"/*; do
+        [ -d "$dir" ] || continue
+        themes+=( "$(basename "$dir")" )
+    done
+    
+    mapfile -t themes < <(printf '%s\n' "${themes[@]}" | sort)
+    
+    total=${#themes[@]}
+    # handle case if no themes are there
+    if [ "$total" -eq 0 ]; then
+        echo "No themes found in '$THEMES_DIR'"
+        exit 1
+    fi
+
+    # finding curr_index 
+    curr_index=-1
+    for i in "${!themes[@]}"; do
+        if [[ "${themes[$i]}" == "$curr_theme" ]]; then
+            curr_index="$i"
+            break
+        fi
+    done
+
+    # handle case if curr_theme is not found
+    if [ "$curr_index" -eq -1 ]; then
+        echo "Error: Theme does not exist"
+        exit 1
+    fi
+
+    new_index=$(( (curr_index + 1) % total ))
+    new_theme="${themes[$new_index]}"
+}
+
+get_wallpapers(){
+    # edge case if curr_wallpaper is not an index value
+    if ! [[ "$curr_wallpaper" =~ ^[0-9]+$ ]]; then
+        curr_wallpaper=0
+    fi
+
+
+    #getting wallpapers
+    shopt -s nullglob
+    shopt -s nocaseglob
+    wallpapers=( "$THEMES_DIR/$curr_theme"/*.jpg  \
+                 "$THEMES_DIR/$curr_theme"/*.jpeg \
+                 "$THEMES_DIR/$curr_theme"/*.png  \
+                 "$THEMES_DIR/$curr_theme"/*.webp )
+    shopt -u nullglob
+    shopt -u nocaseglob
+
+    mapfile -t wallpapers < <(printf '%s\n' "${wallpapers[@]}" | sort)
+    total=${#wallpapers[@]}
+
+    # handle case if no wallpapers are there
+    if [ "$total" -eq 0 ]; then
+        echo "No wallpapers found in theme '$curr_theme'"
+        exit 1
+    fi
+    # handle case if index is out of bounds 
+    if [ "$curr_wallpaper" -ge "$total" ]; then
+        curr_wallpaper=0
+    fi
+}
+
+validate_image(){
+    #validate the new wallpaper (jpg, jpeg, png, webp) supported
+    # validates if the image is corrupted (png renamed as jpg etc)
+    mime=$(file --mime-type -b "$new_wallpaper")
+    ext="${new_wallpaper##*.}"
+    ext="${ext,,}"
+    case "$mime" in
+        image/jpeg)
+            [[ "$ext" == "jpg" || "$ext" == "jpeg" ]] || { echo "Extension mismatch"; exit 1; }
+            ;;
+        image/png)
+            [[ "$ext" == "png" ]] || { echo "Extension mismatch"; exit 1; }
+            ;;
+        image/webp)
+            [[ "$ext" == "webp" ]] || { echo "Extension mismatch"; exit 1; }
+            ;;
+        *)
+            echo "Unsupported image type: $mime"
+            exit 1
+            ;;
+        esac
+}
+
+apply_wallpaper(){
+    if ! hyprctl hyprpaper preload "$new_wallpaper" >/dev/null 2>&1; then
+        echo "Error: Failed to load wallpaper: $new_wallpaper"
+        exit 1
+    fi
+    if ! hyprctl hyprpaper wallpaper ",$new_wallpaper" >/dev/null 2>&1; then
+        echo "Error: Failed to set wallpaper: $new_wallpaper"
+        exit 1
+    fi
+    echo "$new_index" > "$CURRENT_WALLPAPER_FILE"
+}
+case "$1" in
+    next-theme)
+
+        read_state
+        get_themes
+
+        curr_theme="$new_theme"
+        curr_wallpaper=0
+
+        get_wallpapers
+
+        new_index=0
+        new_wallpaper="${wallpapers[$new_index]}"
+
+        validate_image
+        apply_wallpaper
+
+        echo "$new_theme" > "$CURRENT_FILE_THEME"
+        ;;
+    next-wallpaper)
+        
+        read_state
+        get_wallpapers
+
+        new_index=$(( (curr_wallpaper + 1) % total ))
+        new_wallpaper="${wallpapers[$new_index]}"
+        
+        validate_image
+        apply_wallpaper
+        ;;
+    *)
+        echo "Usage: themectl {next-theme|next-wallpaper}"
+        exit 1
+        ;;
+esac

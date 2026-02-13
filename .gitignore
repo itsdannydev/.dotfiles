@@ -1,0 +1,5 @@
+# Ignore all wallpapers
+config/hypr/themes/*/*.jpg
+config/hypr/themes/*/*.jpeg
+config/hypr/themes/*/*.png
+config/hypr/themes/*/*.webp
