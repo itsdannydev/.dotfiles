@@ -16,10 +16,31 @@ flock -n 9 || exit 0
 
 CURRENT_FILE_THEME="$STATE_DIR/current_theme"
 CURRENT_WALLPAPER_FILE="$STATE_DIR/current_wallpaper"
-# if current_theme of current_wallpaper doesnt exist, initialize them
-[ -f "$CURRENT_FILE_THEME" ] || echo "cyan" > "$CURRENT_FILE_THEME"
-[ -f "$CURRENT_WALLPAPER_FILE" ] || echo "0" > "$CURRENT_WALLPAPER_FILE"
 
+#fallback function
+fallback_to_default_theme(){
+    curr_theme=""
+
+    #fallback to first available theme
+    for dir in "$THEMES_DIR"/*; do
+        [ -d "$dir" ] || continue
+        curr_theme="$(basename "$dir")"
+        break
+    done
+    
+    if [ -z "$curr_theme" ]; then
+        echo "Error: No themes availabel in '$THEMES_DIR'"
+        exit 1
+    fi
+    
+    curr_wallpaper=0 
+    echo "$curr_theme" > "$CURRENT_FILE_THEME"
+    echo "0" > "$CURRENT_WALLPAPER_FILE"
+}
+
+# if current_theme of current_wallpaper doesnt exist, initialize them
+[ -f "$CURRENT_FILE_THEME" ] || fallback_to_default_theme
+[ -f "$CURRENT_WALLPAPER_FILE" ] || echo "0" > "$CURRENT_WALLPAPER_FILE"
 
 # functions
 read_state(){
@@ -27,10 +48,11 @@ read_state(){
     read -r curr_theme < "$CURRENT_FILE_THEME"
     read -r curr_wallpaper < "$CURRENT_WALLPAPER_FILE"
 
-    # theme doesn't exist
+    # theme doesn't exist or invalid theme name in hypr/.states
     if [ ! -d "$THEMES_DIR/$curr_theme" ]; then
-        echo "Error: Theme '$curr_theme' does not exist"
-        exit 1
+        fallback_to_default_theme
+        read -r curr_theme < "$CURRENT_FILE_THEME"
+        read -r curr_wallpaper < "$CURRENT_WALLPAPER_FILE"
     fi
 }
 
@@ -139,6 +161,20 @@ apply_wallpaper(){
     echo "$new_index" > "$CURRENT_WALLPAPER_FILE"
 }
 case "$1" in
+    init)
+        read_state
+        get_wallpapers
+
+        if [ "$curr_wallpaper" -ge "$total" ]; then
+            curr_wallpaper=0
+        fi
+
+        new_index="$curr_wallpaper"
+        new_wallpaper="${wallpapers[$new_index]}"
+
+        validate_image
+        apply_wallpaper
+        ;;
     next-theme)
 
         read_state
