@@ -1,0 +1,3 @@
+$primary = 8b0000ee 
+$secondary = ff3b3bee
+$inactive = 595959aa

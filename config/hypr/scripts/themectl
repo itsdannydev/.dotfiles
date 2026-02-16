@@ -172,6 +172,10 @@ case "$1" in
         new_index="$curr_wallpaper"
         new_wallpaper="${wallpapers[$new_index]}"
 
+        # initialize accent color
+        cp "$THEMES_DIR/$curr_theme/theme.color" \
+            "$THEMES_DIR/accent.color"
+
         validate_image
         apply_wallpaper
         ;;
@@ -192,6 +196,10 @@ case "$1" in
         apply_wallpaper
 
         echo "$new_theme" > "$CURRENT_FILE_THEME"
+        if [ -f "$THEMES_DIR/$new_theme/theme.color" ]; then
+            cp "$THEMES_DIR/$new_theme/theme.color" \
+                "$THEMES_DIR/accent.color"
+        fi
         ;;
     next-wallpaper)
         
