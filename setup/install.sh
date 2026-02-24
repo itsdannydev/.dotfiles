@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefall
+set -euo pipefail
 
 # flags handling
 YES=false
@@ -44,7 +44,7 @@ for entry in "${modules[@]}"; do
 
     if ask "Install $name config?"; then
         printf "%b==> %s%b\n" "$BLUE" "$name" "$RESET"
-        source "$DOTFILES_DIR/install/modules/$file"
+        source "$DOTFILES_DIR/setup/modules/$file"
         echo
     fi
 done
