@@ -23,14 +23,29 @@ At the moment, this repository contains **only my Neovim configuration**. Other 
   - Modular Lua-based setup
   - Plugin management via `lazy.nvim`
   - Focused on clarity, maintainability, and learning
+- **Hyprland configuration**
+  - Uses hyprpaper as wallpaper manager
+  - Make sure to adjust default apps like terminal and menu in the config.
+
+## Repository Structure
+
+dotfiles/<br/>
+├── config/        # ~/.config applications<br/>
+├── home/          # files linked directly to $HOME<br/>
+├── setup/<br/>
+│   ├── install.sh    # installer entry point<br/>
+│   ├── lib/       # shared installer utilities<br/>
+│   └── modules/   # modular install scripts<br/>
+└── assets/        # images and documentation assets<br/>
 
 ---
 
 ## Installation
 
-### Prerequisites
+### Requirements
 
-- Neovim (latest stable recommended)
+- Neovim (tested on NVIM v0.11.5)
+- Hyprland (tested on Hyprland 0.51.1)
 - Git
 
 ### Quick Start
@@ -38,21 +53,30 @@ At the moment, this repository contains **only my Neovim configuration**. Other 
 - Clone the repository:
 
   ```bash
-  git clone https://github.com/itsdannydev/dotfiles.git
+  git clone https://github.com/itsloki-dev/dotfiles.git
   ```
-- Run the `install.sh` script inside `dotfiles/install`. <br/>
-  The installer uses symbolic links to keep the configuration in sync with this repository.
+- Run the `install.sh` script inside `dotfiles/setup`. <br/>
+  The installer uses symbolic links to keep the configuration in sync with this repository. <br/>
+  For non-interactive install, run `install.sh` with the `-y` or `--yes-all` flag. <br/>
+  Eg: `./install.sh -y`
   ```bash
-  cd dotfiles/install/
+  cd dotfiles/setup/
   ./install.sh
   ```
   > During installation, if an existing configuration path already exists:
   > - any symlink at the target location is removed
   > - any non-symlink configuration is backed up to `~/.local/share/dotfiles-backups`
+<br/>
 
+## Updating
 
-<br/><br/>
-  Plugins will be installed automatically on first launch
+After pulling run the install script again:
+
+```bash
+git pull
+cd dotfiles/setup
+./install.sh
+```
 
 ---
 
