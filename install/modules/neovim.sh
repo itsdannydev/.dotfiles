@@ -5,8 +5,6 @@ if [ -z "$DOTFILES_DIR" ]; then
   exit 1
 fi
 
-echo "Installing Neovim config..."
-
 NVIM_CONFIG_DIR="$CONFIG_DIR/nvim"
 SOURCE_DIR="$DOTFILES_DIR/config/nvim"
 

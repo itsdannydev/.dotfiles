@@ -5,8 +5,6 @@ if [ -z "$DOTFILES_DIR" ]; then
     exit 1
 fi
 
-echo "Installing Hyprland config..."
-
 HYPRLAND_CONFIG_DIR="$CONFIG_DIR/hypr"
 SOURCE_DIR="$DOTFILES_DIR/config/hypr"
 
@@ -30,6 +28,14 @@ fi
 ln -s "$SOURCE_DIR" "$HYPRLAND_CONFIG_DIR"
 
 echo "Hyprland config installed."
-echo "Reloading Hyprland Config"
-hyprctl reload
-echo "Done"
+echo "Reloading Hyprland config..."
+
+# if command hyprctl does not exist
+if ! command -v hyprctl >/dev/null; then
+    echo "hyprctl not found — skipping reload."
+elif hyprctl reload >/dev/null; then
+    echo "Hyprland reloaded successfully."
+else
+    echo "Automatic reload failed — manual reload required."
+fi
+
