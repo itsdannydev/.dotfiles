@@ -19,6 +19,9 @@ mkdir -p "$BACKUP_DIR"
 if ask "Install Neovim config?"; then
   source "$DOTFILES_DIR/install/modules/neovim.sh"
 fi
+if ask "Install Hyprland config?"; then
+    source "$DOTFILES_DIR/install/modules/hyprland.sh"
+fi
 
 echo "Done."
 
