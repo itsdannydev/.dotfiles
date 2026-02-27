@@ -27,7 +27,7 @@ unset rc
 #custom commands
 mkcd () {
   local dir="$@"
-  mkdir -p -- "$dir" && cd -- "$dir"
+  mkdir -p -- "$dir" && builtin cd -- "$dir"
 }
 cd () {
     builtin cd "$@" && tree -L 1

@@ -7,8 +7,8 @@ return { -- Highlight, edit, and navigate code
         require('nvim-treesitter.config').setup({
               ensure_installed = { 
                   'bash', 
-                  'c', 'python', 'java', 'go', 'sql',
-                  'html', 'css', 'javascript', 'typescript', 'tsx', 
+                  'c', 'python', 'java', 'rust', 'go', 'sql',
+                  'html', 'css', 'javascript', 'typescript', 'tsx',
                   'lua', 'luadoc',
                   'markdown', 'markdown_inline',
                   'vim', 'vimdoc',
