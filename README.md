@@ -29,7 +29,7 @@ At the moment, this repository contains **only my Neovim configuration**. Other 
 
 ## Repository Structure
 
-dotfiles/<br/>
+.dotfiles/<br/>
 ├── config/        # ~/.config applications<br/>
 ├── home/          # files linked directly to $HOME<br/>
 ├── setup/<br/>
@@ -55,12 +55,12 @@ dotfiles/<br/>
   ```bash
   git clone https://github.com/itsloki-dev/.dotfiles.git
   ```
-- Run the `install.sh` script inside `dotfiles/setup`. <br/>
+- Run the `install.sh` script inside `.dotfiles/setup`. <br/>
   The installer uses symbolic links to keep the configuration in sync with this repository. <br/>
   For non-interactive install, run `install.sh` with the `-y` or `--yes-all` flag. <br/>
   Eg: `./install.sh -y`
   ```bash
-  cd dotfiles/setup/
+  cd .dotfiles/setup/
   ./install.sh
   ```
   > During installation, if an existing configuration path already exists:
@@ -74,7 +74,7 @@ After pulling run the install script again:
 
 ```bash
 git pull
-cd dotfiles/setup
+cd .dotfiles/setup
 ./install.sh
 ```
 
