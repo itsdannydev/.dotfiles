@@ -53,7 +53,7 @@ dotfiles/<br/>
 - Clone the repository:
 
   ```bash
-  git clone https://github.com/itsloki-dev/dotfiles.git
+  git clone https://github.com/itsloki-dev/.dotfiles.git
   ```
 - Run the `install.sh` script inside `dotfiles/setup`. <br/>
   The installer uses symbolic links to keep the configuration in sync with this repository. <br/>
