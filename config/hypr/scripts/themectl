@@ -173,8 +173,10 @@ case "$1" in
         new_wallpaper="${wallpapers[$new_index]}"
 
         # initialize accent color
-        cp "$THEMES_DIR/$curr_theme/theme.color" \
-            "$THEMES_DIR/accent.color"
+       if [ -f "$THEMES_DIR/$curr_theme/theme.color" ]; then
+           cp "$THEMES_DIR/$curr_theme/theme.color" \
+              "$THEMES_DIR/accent.color"
+       fi 
 
         validate_image
         apply_wallpaper
