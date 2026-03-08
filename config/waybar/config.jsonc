@@ -1,0 +1,131 @@
+{
+    "layer": "top",  // top|bottom|sometihgn|something
+    "position":"top",  // top|bottom|left|right
+
+    "height": 40,
+    "spacing": 2,
+    
+    "margin-top": 0,
+    "margin-right": 0,
+    "margin-bottom": 0,
+    "margin-left": 0,
+    
+    "exclusive": true,  
+    "passthrough": false, // mouse clicks should pass through or not
+    "fixed-center": true,
+
+    "modules-left": [
+        "clock#simpleclock",
+        "clock"
+    ],
+    "modules-center": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-right": [
+        "backlight",
+        "custom/sep",
+        "battery",
+        "power-profiles-daemon"
+    ],
+
+
+    // MODULES DEFINITION
+    "battery": {
+        "bat": "BAT1", // as in /sys/class/power_supply/         default: auto-detect
+        "interval": 20, // polling interveal for battery status
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "design-capacity": false, // use design capacity instead of usable capacity
+        "format": "{capacity}% {icon}",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-full": " 100%",
+        "format-icons": ["", "", "", "", ""],
+        "format-time": "{H}h {M}m",
+        "tooltip": true,
+        //"tooltip-format": "Battery: {capacity}%\nStatus: {status}\nTime remaining: {time}"
+        "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower draw: {power}\nHealth: {health}%\nCycles: {cycles}"
+    },
+    "backlight":{
+       "format": "{percent}% {icon}",
+       "format-icons": ["", ""],
+       "tooltip": true,
+       "tooltip-format": "brightness: {percent}%",
+       "on-click": "brightnessctl set 100%-"
+    },
+
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip": true,
+        "tooltip-format": "{profile}",
+        "format-icons":{
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+
+    "hyprland/window": {
+        "format": "{class:.20}", // max length = 20, if class name exceeds 20 chars, it is truncated
+        "icon": true,
+        "icon-size": 20,
+        "rewrite": {
+            "":"DannyDev",
+            "org.mozilla.firefox": "firefox"
+        }
+    },
+    "hyprland/workspaces": {
+        "persistent-workspaces":{
+           "*": 10
+        },
+        "show-special": false,
+        "format": "{icon} {windows}",
+        "format-icons": {
+            "active":"",
+            "default":"",
+            "empty":"",
+            "urgent":"󰀦"
+        },
+        "format-window-separator": "",
+        "window-rewrite-default": "",
+        "window-rewrite": {
+            "class<spotify>": "", // windows with class as 'spotify' [ check window class with hyprctl clients ]
+            "class<org.mozilla.firefox> title<.*youtube.*>": "" // windows whose title has 'youtube' in them
+        }
+    },
+
+    "clock":{
+        "format": " {:L%a %d %b}", // a-abbr. week name, d-date of month, b-abbr. month name
+        "tooltip-format": "<span color='#cdd6f4' font='JetBrainsMono Nerd Font 14'><tt>{calendar}</tt></span>",
+
+        // configures the calendar popup that appear when you hover over the clock
+        "calendar":{
+            "format":{
+                "days": "<span weight='normal'>{}</span>", // 12
+                "months": "<span color='#cdd6f4'><b>{}</b></span>", // March 2026
+                "today": "<span color='#f38ba8' weight='700'><u>{}</u></span>", // if today is 6, underlined 6
+                "weekdays": "<span color='#f9e2af'><b>{}</b></span>", // Sun Mon Tue Wed Thu Fri Sat
+                "weeks": "<span color='#a6e3a1'><b>W{}</b></span>" // example: W10
+            },
+            "mode": "month", // month|year
+            "mode-mon-col": 3, // months per column, only relevan for mode = year
+            "weeks-pos": "left", // left|right
+            "on-scroll": 1 // scroll to change months (not working)
+        }
+    },
+
+    "clock#simpleclock": {
+        "tooltip": false,
+        "format": " {:%H:%M}"
+    },
+
+    // UTILITY MODULES
+    "custom/sep": {
+        "format": "|",
+        "tooltip": false
+      }
+}

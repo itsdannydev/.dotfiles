@@ -1,0 +1,10 @@
+* {
+  font-family: "JetBrainsMono Nerd Font Mono", Lexend, sans-serif;
+}
+
+#workspaces {
+    font-family: "JetBrainsMono Nerd Font Mono",monospace;
+}
+#workspaces button{
+    font-size: 24px;
+}
