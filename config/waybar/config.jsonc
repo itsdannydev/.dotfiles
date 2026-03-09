@@ -34,7 +34,28 @@
 
     // MODULES DEFINITION
     "bluetooth": {
+        "format": "󰂯(default)",
+        "format-no-controller": "<span size='130%'></span>", // bluetooth controller is not available (controller doesnt exist - hardware level issue)
+        "format-disabled": "<span color='red' size='130%'>󰂲</span>", // controller is disabled ( controller exists but isn'nt enabled)
+        "format-off": "<span size='130%'>󰂲</span>", // controller is turned off (bluetooth functionality is turned off - software level issue)
+        "format-on": "󰂯", // yep, you guessed it
+        "format-connected": "<span size='130%'>{icon}󰂱</span>({num_connections})", // hmmm... what can it be...
 
+        "format-icons": {
+          "headset": "󰋋", // audio output + microphone
+          "headphones": "󰋋", // audio output only
+          "phone": "󰏲", //smartphone
+          "default": ""
+        },
+
+        "tooltip": true,
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias} ({device_battery_percentage}%)",
+        "tooltip-format-disabled": "Bluetooth controller is disabled",
+        "tooltip-format": "Bluetooth: {status}\n\nController:\n{controller_address} ({controller_address_type})\n\nNo devices connected",
+
+        "on-click": "( (bluetoothctl show | grep -q 'Powered: yes') && bluetoothctl power off ) || bluetoothctl power on",
+        "on-click-right": "bluetoothctl power on && bluetoothctl agent on && bluetoothctl default-agent && bluetoothctl scan on"
     },
     "battery": {
         "bat": "BAT1", // as in /sys/class/power_supply/         default: auto-detect
@@ -54,8 +75,8 @@
         "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower draw: {power}\nHealth: {health}%\nCycles: {cycles}"
     },
     "backlight":{
-       "format": "{percent}% {icon}",
-       "format-icons": ["", ""],
+       "format": "{percent}% <span size='130%'>{icon}</span>",
+       "format-icons": ["󰃠","󰃟","󰃝","󰃞"],
        "tooltip": true,
        "tooltip-format": "brightness: {percent}%",
        "on-click": "brightnessctl set 100%-"
