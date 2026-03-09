@@ -12,7 +12,6 @@ Dotfiles are used to customize tools, workflows, and editor behavior in a way th
 
 The goal of this repo is not to be a “one-size-fits-all” setup, but a **personal, evolving configuration** that reflects how I work.
 
-At the moment, this repository contains **only my Neovim configuration**. Other configs may be added later.
 
 > Note: This setup is currently tested only on Linux. Other platforms may require adjustments.
 
@@ -26,6 +25,9 @@ At the moment, this repository contains **only my Neovim configuration**. Other 
 - **Hyprland configuration**
   - Uses hyprpaper as wallpaper manager
   - Make sure to adjust default apps like terminal and menu in the config.
+- **Waybar configuration**
+  - Floating style waybar with each module as pills.
+  - Minimal config with Nerd Font Icons
 
 ## Repository Structure
 
@@ -46,6 +48,7 @@ At the moment, this repository contains **only my Neovim configuration**. Other 
 
 - Neovim (tested on NVIM v0.11.5)
 - Hyprland (tested on Hyprland 0.51.1)
+- Waybar (tested on Waybar v0.13.0)
 - Git
 
 ### Quick Start
