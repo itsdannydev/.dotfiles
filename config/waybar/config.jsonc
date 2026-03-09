@@ -24,13 +24,18 @@
     ],
     "modules-right": [
         "backlight",
-        "custom/sep",
+        "custom/sep", // network
+        "bluetooth",
+        "custom/sep", // power 
         "battery",
         "power-profiles-daemon"
     ],
 
 
     // MODULES DEFINITION
+    "bluetooth": {
+
+    },
     "battery": {
         "bat": "BAT1", // as in /sys/class/power_supply/         default: auto-detect
         "interval": 20, // polling interveal for battery status
@@ -40,13 +45,12 @@
         },
         "design-capacity": false, // use design capacity instead of usable capacity
         "format": "{capacity}% {icon}",
-        "format-charging": "󰂄 {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-full": " 100%",
-        "format-icons": ["", "", "", "", ""],
+        "format-charging": "{capacity}% 󰂄",
+        "format-plugged": "{capacity}% ",
+        "format-full": "100% 󰁹",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
         "format-time": "{H}h {M}m",
         "tooltip": true,
-        //"tooltip-format": "Battery: {capacity}%\nStatus: {status}\nTime remaining: {time}"
         "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower draw: {power}\nHealth: {health}%\nCycles: {cycles}"
     },
     "backlight":{
