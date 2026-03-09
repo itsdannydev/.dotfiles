@@ -3,9 +3,65 @@
   font-size: 16px;
 }
 
-#workspaces {
-    font-family: "JetBrainsMono Nerd Font Mono",monospace;
+window#waybar{
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 10px;
 }
+
+#workspaces,
+#window,
+#clock,
+#pulseaudio,
+#backlight,
+#bluetooth,
+#network,
+#battery,
+#power-profiles-daemon,
+#custom-power{
+    background: rgba(255,255,255,0.1);
+    color: white;
+    padding: 0px 12px;
+    margin: 4px 6px;
+    border-radius: 10px;
+    transition: background 0.5s ease;
+}
+#custom-sep {
+    color: rgba(255,255,255,0.45);
+}
+
+#workspaces:hover,
+#window:hover,
+#clock:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#bluetooth:hover,
+#network:hover,
+#battery:hover,
+#power-profiles-daemon:hover {
+    background: rgba(255,255,255,0.2);
+}
+#custom-power:hover{
+    background: rgba(217,76,0,0.5);
+}
+
+
 #workspaces button label{
-    font-size: 24px;
+    font-size: 22px;
+    color: white;
 }
+
+#workspaces button:hover{
+    background:transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+#workspaces button:hover label{
+    color: cyan;
+}
+#workspaces button.active label{
+    color: cyan;
+}
+
+

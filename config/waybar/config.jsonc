@@ -5,10 +5,10 @@
     "height": 40,
     "spacing": 2,
     
-    "margin-top": 0,
-    "margin-right": 0,
+    "margin-top": 10,
+    "margin-right": 10,
     "margin-bottom": 0,
-    "margin-left": 0,
+    "margin-left": 10,
     
     "exclusive": true,  
     "passthrough": false, // mouse clicks should pass through or not
@@ -23,16 +23,63 @@
         "hyprland/window"
     ],
     "modules-right": [
+        "pulseaudio",
         "backlight",
         "custom/sep", // network
         "bluetooth",
+        "network",
         "custom/sep", // power 
         "battery",
-        "power-profiles-daemon"
+        "power-profiles-daemon",
+        "custom/sep",
+        "custom/power"
     ],
 
 
     // MODULES DEFINITION
+    "custom/power": {
+        "tooltip": true,
+        "tooltip-format": "sleep",
+        "on-click": "systemctl suspend",
+        "format": "<span size='130%'>⏻</span>"
+    },
+    "pulseaudio": {
+        "format": "{volume}% <span size='150%' rise='-2000'>{icon}</span>",
+        "format-bluetooth": "{volume}% <span size='150%' rise='-2000'></span>",
+        "format-muted": "<span size='190%'>󰝟</span>",
+        "format-icons": {
+            "headphone": "󰋎",
+            "hands-free": "󰋎",
+            "headset": "󰋎",
+            "phone": "",
+            "phone-muted": "",
+            "portable": "",
+            "default": ["", ""]
+        },
+        "scroll-step": 1,
+        "on-click": "kitty -e alsamixer",
+        "ignored-sinks": ["Easy Effects Sink"]
+    }, 
+    "network": {
+        "interval": 1,
+        "format": "<span size='160%'></span>",
+        "format-wifi": "<span size='180%'>{icon}</span>",
+        // Ethernet display
+        "format-ethernet": "<span size='180%'>󰈀</span>",
+        // When no network is connected
+        "format-disconnected": "<span size='180%'>󰤮</span>",
+        "format-disabled": "<span size='180%'>󰤮</span>",
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+        
+        // Displays detailed network information
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "tooltip-format-wifi": "WiFi: {essid}\nSignal: {signalStrength}%\nIP: {ipaddr}",
+        "tooltip-format-ethernet": "Ethernet\nIP: {ipaddr}",
+        "tooltip-format-disconnected": "No network connection",
+
+        "on-click": "( (nmcli radio wifi | grep -q 'enabled') && nmcli radio wifi off ) || nmcli radio wifi on",
+        "on-click-right": "nmcli radio wifi on && nmcli dev wifi scan"
+    },
     "bluetooth": {
         "format": "󰂯(default)",
         "format-no-controller": "<span size='130%'></span>", // bluetooth controller is not available (controller doesnt exist - hardware level issue)
@@ -72,7 +119,7 @@
         "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"],
         "format-time": "{H}h {M}m",
         "tooltip": true,
-        "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower draw: {power}\nHealth: {health}%\nCycles: {cycles}"
+        "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower draw: {power}\nHealth: {health}%"
     },
     "backlight":{
        "format": "{percent}% <span size='130%'>{icon}</span>",
@@ -108,23 +155,23 @@
            "*": 10
         },
         "show-special": false,
-        "format": "{icon} {windows}",
+        "format": "{icon}{windows}",
         "format-icons": {
             "active":"",
             "default":"",
             "empty":"",
             "urgent":"󰀦"
         },
-        "format-window-separator": "",
+        "format-window-separator": " ",
         "window-rewrite-default": "",
         "window-rewrite": {
-            "class<spotify>": "", // windows with class as 'spotify' [ check window class with hyprctl clients ]
+            "class<spotify>": "<span size='120%' rise='-1500' color='lime'> </span>", // windows with class as 'spotify' [ check window class with hyprctl clients ]
             "class<org.mozilla.firefox> title<.*youtube.*>": "" // windows whose title has 'youtube' in them
         }
     },
 
     "clock":{
-        "format": " {:L%a %d %b}", // a-abbr. week name, d-date of month, b-abbr. month name
+        "format": "<span size='150%' rise='-2000'> </span>{:L%a %d %b}", // a-abbr. week name, d-date of month, b-abbr. month name
         "tooltip-format": "<span color='#cdd6f4' font='JetBrainsMono Nerd Font 14'><tt>{calendar}</tt></span>",
 
         // configures the calendar popup that appear when you hover over the clock
@@ -145,7 +192,7 @@
 
     "clock#simpleclock": {
         "tooltip": false,
-        "format": " {:%H:%M}"
+        "format": "<span size='160%' rise='-3300'> </span>{:%H:%M}"
     },
 
     // UTILITY MODULES
