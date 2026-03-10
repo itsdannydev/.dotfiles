@@ -5,4 +5,4 @@ config/hypr/themes/*/*.png
 config/hypr/themes/*/*.webp
 
 # Ignore state files
-./config/hypr/.state/
+config/hypr/.state/
