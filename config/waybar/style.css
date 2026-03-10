@@ -4,7 +4,7 @@
 }
 
 window#waybar{
-    background-color: rgba(0,0,0,0.15);
+    background-color: transparent;
     border-radius: 10px;
 }
 
@@ -18,10 +18,10 @@ window#waybar{
 #battery,
 #power-profiles-daemon,
 #custom-power{
-    background: rgba(255,255,255,0.1);
+    background: rgba(30,30,30,0.875);
     color: white;
     padding: 0px 12px;
-    margin: 4px 6px;
+    margin: 0px 6px;
     border-radius: 10px;
     transition: background 0.5s ease;
 }
@@ -38,7 +38,7 @@ window#waybar{
 #network:hover,
 #battery:hover,
 #power-profiles-daemon:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgb(30,30,30);
 }
 #custom-power:hover{
     background: rgba(217,76,0,0.5);
