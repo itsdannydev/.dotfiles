@@ -30,20 +30,12 @@
         "network",
         "custom/sep", // power 
         "battery",
-        "power-profiles-daemon",
-        "custom/sep",
-        "custom/power"
+        "power-profiles-daemon"
     ],
 
 
     // MODULES DEFINITION
-    "custom/power": {
-        "tooltip": true,
-        "tooltip-format": "sleep",
-        "on-click": "systemctl suspend",
-        "format": "<span size='130%'>⏻</span>"
-    },
-    "pulseaudio": {
+   "pulseaudio": {
         "format": "{volume}% <span size='150%' rise='-2000'>{icon}</span>",
         "format-bluetooth": "{volume}% <span size='150%' rise='-2000'></span>",
         "format-muted": "<span size='190%'>󰝟</span>",
@@ -147,7 +139,9 @@
         "icon-size": 20,
         "rewrite": {
             "":"DannyDev",
-            "org.mozilla.firefox": "firefox"
+            ".*firefox.*": "FireFox",
+            ".*chatgpt.com.*": "ChatGPT",
+            ".*youtube.com.*": "YouTube"
         }
     },
     "hyprland/workspaces": {
