@@ -1,8 +1,14 @@
-# Ignore all wallpapers
-config/hypr/themes/*/*.jpg
-config/hypr/themes/*/*.jpeg
-config/hypr/themes/*/*.png
-config/hypr/themes/*/*.webp
+# Ignore wallpapers
+themes/wallpapers/*.jpg
+themes/wallpapers/*.jpeg
+themes/wallpapers/*.png
+themes/wallpapers/*.webp
+
+# Re-include default wallpaper
+!themes/wallpapers/default.jpg
+!themes/wallpapers/default.jpeg
+!themes/wallpapers/default.png
+!themes/wallpapers/default.webp
 
 # Ignore state files
 config/hypr/.state/
