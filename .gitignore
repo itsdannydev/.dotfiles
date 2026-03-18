@@ -12,3 +12,7 @@ themes/wallpapers/*.webp
 
 # Ignore state files
 config/hypr/.state/
+
+# Ignore current colour and accent
+themes/accent.color
+themes/colors.css
