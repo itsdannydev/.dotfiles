@@ -16,3 +16,6 @@ config/hypr/.state/
 # Ignore current colour and accent
 themes/accent.color
 themes/colors.css
+
+# Ignore style.css of waybar (dynamically made using base.css and update_theme.sh script)
+config/waybar/style.css
