@@ -1,16 +1,23 @@
+# config/hypr/update_theme.sh
+WALLPAPER=$(< "$DOTFILES_ROOT/config/hypr/.state/current_wallpaper")
+DOTFILES_ROOT="$1"
+ACCENT=$(< "$DOTFILES_ROOT/themes/accent.color")
+WALLPAPER=$(< "$DOTFILES_ROOT/config/hypr/.state/current_wallpaper_name")
+WALLPAPER_PATH="$DOTFILES_ROOT/themes/wallpapers/$WALLPAPER"
+
 #update hyprpaper config and reload
 # config/hypr/update_theme.sh
 # Only runs if hyprctl is available (i.e. Hyprland is running)
-command -v hyprctl &>/dev/null || return 0
+command -v hyprctl &>/dev/null || exit
 
-if [[ -n "$hex" ]]; then
-    hyprctl keyword general:col.active_border "rgba(${hex:1}ee)" 2>/dev/null || true
-fi
+# update border color
+hyprctl keyword general:col.active_border "rgba(${ACCENT:1}ee)" 2>/dev/null || true
 
-if [[ -n "$wallpaper_path" ]]; then
+# update wallpaper
+if [[ -f "$WALLPAPER_PATH" ]]; then
     hyprctl hyprpaper unload all 2>/dev/null || true
-    hyprctl hyprpaper preload "$wallpaper_path" 2>/dev/null || true
+    hyprctl hyprpaper preload "$WALLPAPER_PATH" 2>/dev/null || true
     while IFS= read -r monitor; do
-        [[ -n "$monitor" ]] && hyprctl hyprpaper wallpaper "$monitor,$wallpaper_path" 2>/dev/null || true
+        [[ -n "$monitor" ]] && hyprctl hyprpaper wallpaper "$monitor,$WALLPAPER_PATH" 2>/dev/null || true
     done < <(hyprctl monitors -j 2>/dev/null | grep -oP '"name":\s*"\K[^"]+')
 fi

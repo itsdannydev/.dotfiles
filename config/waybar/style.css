@@ -1,3 +1,5 @@
+@define-color accent #DC143C;
+/* @accent - accent color */
 * {
   font-family: "JetBrainsMono Nerd Font Mono", Lexend, sans-serif;
   font-size: 16px;
@@ -16,14 +18,18 @@ window#waybar{
 #bluetooth,
 #network,
 #battery,
-#power-profiles-daemon,
-#custom-power{
-    background: rgba(30,30,30,0.875);
+#power-profiles-daemon{
+    background: linear-gradient(rgba(30,30,30,0.95)),@accent;
     color: white;
     padding: 0px 12px;
     margin: 0px 6px;
     border-radius: 10px;
     transition: background 0.5s ease;
+
+    /* accent border */
+    border: 2px solid @accent;
+
+
 }
 #custom-sep {
     color: rgba(255,255,255,0.45);
@@ -40,9 +46,6 @@ window#waybar{
 #power-profiles-daemon:hover {
     background: rgb(30,30,30);
 }
-#custom-power:hover{
-    background: rgba(217,76,0,0.5);
-}
 
 
 #workspaces button label{
@@ -58,10 +61,9 @@ window#waybar{
 }
 
 #workspaces button:hover label{
-    color: cyan;
+    color: @accent;
 }
 #workspaces button.active label{
-    color: cyan;
+    color: @accent;
 }
-
 
