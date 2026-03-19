@@ -50,6 +50,10 @@ next_wallpaper() {
 
     apply_wallpaper "${wallpapers[$idx]}"
     echo "themectl: wallpaper → $(basename "${wallpapers[$idx]}")"
+
+    accent_from_wallpaper "${wallpapers[$idx]}"
+    apply_color "$accent_hex_from_wallpaper"   
+    echo "themectl: auto color → $hex"
 }
 
 next_color() {
@@ -85,11 +89,10 @@ print_status() {
         echo "  wallpaper: (none)"
     fi
 
-    if [ ${#colors[@]} -gt 0 ]; then
-        color_idx=$(( color_idx % ${#colors[@]} ))
+    if [ -f "${STATE_DIR}/current_color_hex" ]; then
         local hex
-        hex=$(< "${colors[$color_idx]}")
-        echo "  color     [${color_idx}/${#colors[@]}]: $hex  ($(basename "${colors[$color_idx]}" .color))"
+        hex=$(< "${STATE_DIR}/current_color_hex")
+        echo "  color: $hex"
     else
         echo "  color: (none)"
     fi

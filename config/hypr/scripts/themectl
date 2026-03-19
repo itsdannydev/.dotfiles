@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -e
 
 #get the real path from where this script runs (resolves the symlink to original file)
 SCRIPT_REAL="$(readlink -f "${BASH_SOURCE[0]}")"
@@ -32,9 +32,11 @@ case "$1" in
         ;;
     next-wallpaper)
         next_wallpaper
+        source "$THEMES_DIR/update_theme.sh"
         ;;
     next-color)
         next_color
+        source "$THEMES_DIR/update_theme.sh"
         ;;
     status)
         print_status
