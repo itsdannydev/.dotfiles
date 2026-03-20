@@ -5,11 +5,8 @@ echo "@define-color accent $(< "$ACCENT_FILE" );" > "$DOTFILES_ROOT/config/wayba
 # cat the styling config
 cat "$DOTFILES_ROOT/config/waybar/base.css" >> "$DOTFILES_ROOT/config/waybar/style.css"
 
-pkill waybar 2>/dev/null || true
-sleep 0.5
-exec 9>&-
-waybar &
-disown 
+# Reload waybar's css only — no need to restart
+pkill -SIGUSR2 waybar 2>/dev/null || true
 
 # Variables in GTK CSS
 #@define-color accent #DC143C;
