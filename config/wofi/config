@@ -1,0 +1,26 @@
+# glassmorphism dark theme
+
+# positioning
+width=400
+height=400
+location=center
+
+prompt=⟩ search # shows '⟩ search' as placeholder in search bar
+filter_rate=100 # how long wofi waits after you stop typing, before it updates the app list
+
+allow_markup=true # allows pango markup (html like tags)
+no_actions=false # allow secondary actions if supported (like launching in terminal). [false => enabled]
+
+halign=fill # horizontal align
+orientation=vertical
+
+mode=drun # desktop run. reads .desktop files to list apps
+insensitive=true # case insensitive
+allow_images=true # app icons
+image_size=28
+term=kitty # sets kitty as terminal if terminal based apps are launched
+hide_scroll=true
+show_all=false # hide resutls that dont match
+dynamic_lines=false # fixed window height. [true => window size changes with no: of results shown]
+lines=8
+columns=1
