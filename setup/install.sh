@@ -31,6 +31,7 @@ modules=(
     "Neovim:neovim.sh"
     "Hyprland:hyprland.sh"
     "Bash:bash.sh"
+    "Waybar:waybar.sh"
 )
 
 echo
