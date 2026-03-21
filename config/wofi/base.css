@@ -37,7 +37,6 @@ window{
 #input{
     margin: 0 0 10px 0;
     padding: 4px 17px;
-    color: @accent;
     color: white;
     background: linear-gradient(
         135deg,
@@ -85,7 +84,6 @@ window{
         transparent
     );
     outline: none;
-    /* border: solid alpha(@accent, 0.6) 1px;w */
 }
 
 /* App icon */
