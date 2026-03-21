@@ -32,6 +32,7 @@ modules=(
     "Hyprland:hyprland.sh"
     "Bash:bash.sh"
     "Waybar:waybar.sh"
+    "Wofi:wofi.sh"
 )
 
 echo
