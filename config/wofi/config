@@ -6,7 +6,7 @@ height=400
 location=center
 
 prompt=⟩ search # shows '⟩ search' as placeholder in search bar
-filter_rate=100 # how long wofi waits after you stop typing, before it updates the app list
+filter_rate=50 # how long wofi waits after you stop typing, before it updates the app list
 
 allow_markup=true # allows pango markup (html like tags)
 no_actions=false # allow secondary actions if supported (like launching in terminal). [false => enabled]
