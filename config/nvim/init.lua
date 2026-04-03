@@ -42,4 +42,5 @@ require('lazy').setup({
   require 'plugins.bufdelete',
   require 'plugins.treesitter',
   require 'plugins.autotag',
+  require 'plugins.surround',
 })
