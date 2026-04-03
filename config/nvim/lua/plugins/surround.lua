@@ -16,4 +16,5 @@ return {
   end,
 }
 
-
+-- For HTML tags, 'sa t' triggers specil mode.
+-- Then enter tag name to get surrounding tags
