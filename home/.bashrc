@@ -36,6 +36,23 @@ cd () {
 
 export PATH="$HOME/.npm-global/bin:$PATH"
 
+append_and_cat() {
+  local file="$1"
+
+  if [[ -z "$file" ]]; then
+    echo "Usage: append_and_cat <file_path>"
+    return 1
+  fi
+
+  if [[ ! -f "$file" ]]; then
+    echo "Error: File '$file' not found"
+    return 1
+  fi
+
+  echo "$file" >> temp
+  cat "$file" >> temp
+}
+
 accent() {
     [[ -z "$1" ]] && echo "Usage: accent <image>" && return 1
     magick "$1" \
