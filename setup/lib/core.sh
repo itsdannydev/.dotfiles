@@ -44,13 +44,15 @@ install_link() {
 
     mkdir -p "$(dirname "$target")"
 
-    if [[ -e "$target" && ! -L "$target" ]]; then
-        echo "Backing up existing $name..."
-        local ts
-        ts=$(date +"%Y-%m-%d_%H-%M-%S")
-        mv "$target" "$BACKUP_DIR/${name}-${ts}"
-    fi
-
+    if [[ -e "$target" || -L "$target" ]]; then
+        if [[ ! -L "$target" ]]; then
+            echo "Backing up existing $name..."
+            ts=$(date +"%Y-%m-%d_%H-%M-%S")
+            mv "$target" "$BACKUP_DIR/${name}-${ts}"
+        else
+            rm -f "$target"
+        fi
+    fi 
     [[ -L "$target" ]] && rm -f "$target"
 
     ln -s "$source" "$target"

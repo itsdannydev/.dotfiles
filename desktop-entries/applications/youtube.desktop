@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=YouTube
+Comment=Open YouTube
+Exec=brave-browser --app=https://youtube.com
+Icon=youtube
+Type=Application
+Terminal=false
+Categories=Emailing

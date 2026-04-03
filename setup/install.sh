@@ -33,6 +33,7 @@ modules=(
     "Bash:bash.sh"
     "Waybar:waybar.sh"
     "Wofi:wofi.sh"
+    "DesktopEntries:desktop_entries.sh"
 )
 
 echo

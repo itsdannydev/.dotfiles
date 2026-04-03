@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=AlsaMixer
+Exec=kitty --class alsamixer -e alsamixer
+Terminal=false
+Type=Application
+Categories=Utility;

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=VTOP
+Comment=Open VTOP
+Exec=chromium-browser --app=https://vtopcc.vit.ac.in
+Icon=default
+Type=Application
+Categories=Education;

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=ChatGPT
+Comment=Open ChatGPT
+Exec=chromium-browser --app=https://chatgpt.com/?temporary-chat=true
+Icon=chatgpt
+Type=Application
+Terminal=false
+Categories=LLM;

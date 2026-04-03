@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=MicroSoft Teams
+Comment=Open Teams
+Exec=chromium-browser --app=https://teams.microsoft.com
+Icon=ms_teams
+Type=Application
+Terminal=false
+Categories=Studies;
