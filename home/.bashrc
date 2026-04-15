@@ -36,7 +36,7 @@ cd () {
 
 export PATH="$HOME/.npm-global/bin:$PATH"
 
-append_and_cat() {
+appcat() {
   local file="$1"
 
   if [[ -z "$file" ]]; then
@@ -51,6 +51,21 @@ append_and_cat() {
 
   echo "$file" >> temp
   cat "$file" >> temp
+}
+
+print_dir() {
+  local path="$1"
+
+  [[ -z "$path" ]] && { echo "Usage: print_dir <path>"; return 1; }
+  [[ ! -e "$path" ]] && { echo "Error: Path '$path' not found"; return 1; }
+
+  if [[ -f "$path" ]]; then
+    appcat "$path"
+  elif [[ -d "$path" ]]; then
+    find "$path" -type f -print0 | while IFS= read -r -d '' file; do
+      appcat "$file"
+    done
+  fi
 }
 
 accent() {
