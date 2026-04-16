@@ -24,6 +24,39 @@ if [ -d ~/.bashrc.d ]; then
 fi
 unset rc
 
+
+
+
+# ------------------- MY Stuff --------------------
+
+#colors
+GREEN="\[\e[32m\]"
+BLUE="\[\e[34m\]"
+RESET="\[\e[0m\]"
+
+# PS1 config
+parse_git_branch() {
+    command -v git >/dev/null 2>&1 || return # returns if git is not installed
+
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return
+    [ -n "$branch" ] && printf " (%s)" "$branch"
+}
+parse_path() {
+    case "$PWD" in
+        "$HOME") return ;;  # exactly ~ → show nothing
+        "$HOME"/*)
+            printf "%s" "~${PWD#$HOME}"
+            ;;
+        *)
+            printf "%s" "$PWD"
+            ;;
+    esac
+}
+PS1="${GREEN}\$(parse_path)${BLUE}\$(parse_git_branch)${GREEN} ❯ ${RESET}"
+
+# uncomment next line if you want username and hostname
+#PS1="${GREEN}\u@\h:\w${BLUE}\$(parse_git_branch)${GREEN}❯ ${RESET}"
+
 #custom commands
 mkcd () {
   local dir="$@"
