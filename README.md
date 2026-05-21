@@ -68,7 +68,7 @@ The goal of this repo is not to be a “one-size-fits-all” setup, but a **pers
 - Clone the repository:
   
   ```bash
-  git clone https://github.com/itsloki-dev/.dotfiles.git
+  git clone https://github.com/itsdannydev/.dotfiles.git
   ```
 
 - Run the `install.sh` script inside `.dotfiles/setup`. <br/>
