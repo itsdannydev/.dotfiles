@@ -149,18 +149,21 @@
            "*": 10
         },
         "show-special": false,
-        "format": "{icon}{windows}",
+        "format": "{name}{icon} {windows}",
         "format-icons": {
-            "active":"",
-            "default":"",
-            "empty":"",
+            "default":"",
+            //"active":"",
+            //"default":"",
+            //"empty":"",
             "urgent":"󰀦"
         },
         "format-window-separator": " ",
         "window-rewrite-default": "",
         "window-rewrite": {
-            "class<spotify>": "<span size='120%' rise='-1500' color='lime'> </span>", // windows with class as 'spotify' [ check window class with hyprctl clients ]
-            "class<org.mozilla.firefox> title<.*youtube.*>": "" // windows whose title has 'youtube' in them
+            "class<spotify>": "<span size='120%' rise='-1500' color='lime'></span>", // windows with class as 'spotify' [ check window class with hyprctl clients ]
+            "title<.*youtube.*>": "<span size='120%' rise='-1500' color='red'></span>", // windows whose title has 'youtube' in them
+            "class<discord>": "<span size='120%' rise='-1500' color='#5865F2'></span>",
+            "title<.*nvim.*>": "<span size='120%' rise='-1500' color='#508E3D'></span>",
         }
     },
 

@@ -52,6 +52,10 @@ window#waybar{
     color: white;
 }
 
+#workspaces button.empty label{
+    color: grey;
+}
+
 #workspaces button:hover{
     background:transparent;
     border: none;
