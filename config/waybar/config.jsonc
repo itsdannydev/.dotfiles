@@ -141,7 +141,9 @@
             "":"DannyDev",
             ".*firefox.*": "FireFox",
             ".*chatgpt.com.*": "ChatGPT",
-            ".*youtube.com.*": "YouTube"
+            ".*claude.ai.*":"Claude",
+            ".*whatsapp.*":"<span size='150%' rise='-1500' color='#2BD46A'></span> Whatsapp",
+            ".*youtube.com.*": "<span size='150%' rise='-1500' color='red'></span> YouTube"
         }
     },
     "hyprland/workspaces": {
@@ -164,6 +166,7 @@
             "title<.*youtube.*>": "<span size='120%' rise='-1500' color='red'></span>", // windows whose title has 'youtube' in them
             "class<discord>": "<span size='120%' rise='-1500' color='#5865F2'></span>",
             "title<.*nvim.*>": "<span size='120%' rise='-1500' color='#508E3D'></span>",
+            "title<web.whatsapp.com>": "<span size='120%' rise='-1500' color='#2BD46A'></span>"
         }
     },
 
