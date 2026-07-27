@@ -57,7 +57,14 @@ PS1="${GREEN}\$(parse_path)${BLUE}\$(parse_git_branch)${GREEN} ❯ ${RESET}"
 # uncomment next line if you want username and hostname
 #PS1="${GREEN}\u@\h:\w${BLUE}\$(parse_git_branch)${GREEN}❯ ${RESET}"
 
-#custom commands
+
+# my aliases
+alias gl='git log --oneline --graph --branches'
+alias gs='git status'
+alias c='clear'
+alias mv='mv -i'
+
+# custom commands
 mkcd () {
   local dir="$@"
   mkdir -p -- "$dir" && builtin cd -- "$dir"
