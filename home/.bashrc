@@ -70,43 +70,13 @@ mkcd () {
   mkdir -p -- "$dir" && builtin cd -- "$dir"
 }
 cd () {
-    builtin cd "$@" && tree -L 1
+    # list the directory after cd, but only if tree is installed
+    builtin cd "$@" || return
+    command -v tree >/dev/null 2>&1 && tree -L 1
 }
 
 
 export PATH="$HOME/.npm-global/bin:$PATH"
-
-appcat() {
-  local file="$1"
-
-  if [[ -z "$file" ]]; then
-    echo "Usage: append_and_cat <file_path>"
-    return 1
-  fi
-
-  if [[ ! -f "$file" ]]; then
-    echo "Error: File '$file' not found"
-    return 1
-  fi
-
-  echo "$file" >> temp
-  cat "$file" >> temp
-}
-
-print_dir() {
-  local path="$1"
-
-  [[ -z "$path" ]] && { echo "Usage: print_dir <path>"; return 1; }
-  [[ ! -e "$path" ]] && { echo "Error: Path '$path' not found"; return 1; }
-
-  if [[ -f "$path" ]]; then
-    appcat "$path"
-  elif [[ -d "$path" ]]; then
-    find "$path" -type f -print0 | while IFS= read -r -d '' file; do
-      appcat "$file"
-    done
-  fi
-}
 
 accent() {
     [[ -z "$1" ]] && echo "Usage: accent <image>" && return 1

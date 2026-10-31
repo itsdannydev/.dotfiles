@@ -6,4 +6,7 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
-. "$HOME/.cargo/env"
+# (only if Rust is installed, otherwise this errors on every login)
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
