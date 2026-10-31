@@ -4,4 +4,4 @@ Comment=Open Claude
 Exec=chromium-browser --app=https://claude.ai/new
 Icon=claude
 Type=Application
-Categories=LLM;
+Categories=Network;

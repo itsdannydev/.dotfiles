@@ -100,6 +100,15 @@ This is wired up in `config/hypr/conf/autostart.conf` (`themectl init; waybar`).
 - Neovim (tested on NVIM v0.11.5)
 - Waybar (tested on Waybar v0.13.0)
 - Wofi (tested on Wofi v1.5.3)
+- hyprpaper (wallpaper)
+- ImageMagick (`magick`, calculates the accent color from the wallpaper)
+- grim, slurp and wl-clipboard (screenshots)
+- jq (used by the screenshot scripts)
+- grimblast (area screenshot keybind)
+- brightnessctl (brightness keys and Waybar backlight)
+- playerctl (media keys)
+- kitty (terminal) and nautilus (file manager), the defaults set at the top of `hyprland.conf`
+- tree (optional, `cd` lists the directory with it if installed)
 - Git
 - Chromium Browser (if you want desktop entries)
 
@@ -147,17 +156,19 @@ I'm not planning to make a script to automate the restoration process as of now,
 
 ### Restoring Backups
 
-Backups are stored under `~/.local/share/dotfiles-backups`, grouped by domain and tool.
+Backups are stored directly under `~/.local/share/dotfiles-backups` (one flat folder, not grouped by tool).
 
-Current layout:
+Each backup is named `<name>-<timestamp>`, where `<name>` is what the installer printed while installing and `<timestamp>` is `YYYY-MM-DD_HH-MM-SS`. Examples:
 
-- `config/<tool>/<timestamp>/` → backed-up config directories
-- `home/<file>/<timestamp>` → backed-up home dotfiles
+- `hypr-2026-03-19_14-02-11` → was `~/.config/hypr`
+- `nvim-2026-03-19_14-02-11` → was `~/.config/nvim`
+- `.bashrc-2026-03-19_14-02-11` → was `~/.bashrc`
+- `youtube.desktop-2026-03-19_14-02-11` → was `~/.local/share/applications/youtube.desktop`
 
-To restore manually:
+To restore manually, copy the backup back to where it came from, under its original name (without the `-<timestamp>` part):
 
-- Copy the desired backup from:
-  - `config/<tool>/<timestamp>` → `~/.config/<tool>`
-  - `home/<file>/<timestamp>` → `~/<file>`
+- config folders (`hypr`, `nvim`, `waybar`, `wofi`) → `~/.config/<name>`
+- home files (`.bashrc`, `.bash_profile`) → `~/<name>`
+- desktop entries (`*.desktop`) → `~/.local/share/applications/<name>`
 
-Existing files, directories, or symlinks should be removed before restoring.
+Existing files, directories, or symlinks at the destination should be removed before restoring.

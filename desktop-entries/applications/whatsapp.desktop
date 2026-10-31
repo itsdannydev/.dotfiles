@@ -4,4 +4,4 @@ Comment=Open Whatsapp
 Exec=chromium-browser --app=https://web.whatsapp.com
 Icon=whatsapp
 Type=Application
-Categories=Chat,SocialMedia;
+Categories=Network;Chat;

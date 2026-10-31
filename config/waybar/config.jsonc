@@ -97,7 +97,8 @@
         "on-click-right": "bluetoothctl power on && bluetoothctl agent on && bluetoothctl default-agent && bluetoothctl scan on"
     },
     "battery": {
-        "bat": "BAT1", // as in /sys/class/power_supply/         default: auto-detect
+        // "bat" is intentionally NOT set: Waybar auto-detects the battery. Hardcoding it
+        // (eg: "BAT1", see /sys/class/power_supply/) breaks on machines where it is BAT0.
         "interval": 20, // polling interveal for battery status
         "states": {
             "warning": 30,

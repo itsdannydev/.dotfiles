@@ -5,4 +5,4 @@ Exec=brave-browser --app=https://youtube.com
 Icon=youtube
 Type=Application
 Terminal=false
-Categories=Emailing
+Categories=AudioVideo;Video;
