@@ -28,7 +28,11 @@ source "$(dirname "$SCRIPT_REAL")/functions.sh"
 
 case "$1" in
     init)
+        # Login: apply default.png + its derived accent, then push it to
+        # hyprpaper/waybar/wofi. update_theme.sh MUST run here - init_state only
+        # records the choice. (Previously a following next-wallpaper did this.)
         init_state
+        source "$THEMES_DIR/update_theme.sh"
         ;;
     next-wallpaper)
         next_wallpaper

@@ -6,3 +6,7 @@ for tool_dir in "$DOTFILES_ROOT/config"/*/; do
     [[ -f "$tool_update" ]] && bash "$tool_update" "$DOTFILES_ROOT" &
 done
 
+# Wait for all tool scripts to finish. At login, waybar is started right after
+# "themectl init" and must find the freshly written style.css (not last session's).
+wait
+

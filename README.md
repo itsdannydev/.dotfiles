@@ -52,6 +52,46 @@ The goal of this repo is not to be a “one-size-fits-all” setup, but a **pers
 
 ---
 
+## Wallpapers and Theming
+
+Wallpapers live in `themes/wallpapers/` and are managed by `config/hypr/scripts/themectl`. The accent color is always calculated automatically from the wallpaper image, and is then applied to the Hyprland borders, Waybar and Wofi.
+
+| Keybind | Action |
+| --- | --- |
+| `Super + W` | next wallpaper (accent color recalculated from it) |
+| `Super + Y` | next color from `themes/colors/*.color` |
+
+### The default wallpaper (`default.png`)
+
+Every login starts on `themes/wallpapers/default.png`, not on whatever wallpaper was used last session.
+
+- **The code expects a file named exactly `default.png`** in `themes/wallpapers/`. It is also the file `hyprpaper.conf` loads, so the name cannot change.
+- **It must be a PNG.** If your wallpaper is a JPEG, WebP or any other format, convert it first (eg: `magick wallpaper.jpg default.png`) instead of just renaming it. A stray `default.jpg`, `default.webp`, etc. is ignored.
+- **It is not part of the `Super + W` cycle.** `default.*` is excluded on purpose because it is only a copy of a wallpaper that is already in the cycle. Otherwise that wallpaper would show up twice.
+- **Its accent color is calculated automatically at every login**, so replacing the file never leaves a stale color behind.
+- **Changing it** is a simple copy that overwrites the old one. The original keeps its own name and stays in the cycle, so there is only ever one duplicate:
+
+  ```bash
+  cp themes/wallpapers/anime_wallpaper.png themes/wallpapers/default.png
+  ```
+
+- If `default.png` is missing, the first wallpaper (alphabetically) is used instead and a warning is printed.
+- Only `default.png` is tracked by git. Every other wallpaper is gitignored, so on a fresh clone the default is the only wallpaper until you add your own.
+- `hyprpaper.conf` uses the absolute path `~/.dotfiles/themes/wallpapers/default.png`, so the repo is expected to be cloned at `~/.dotfiles`.
+
+### How the login sequence avoids flicker
+
+The goal is that nothing visibly changes after the first frame:
+
+1. **Blank screen first.** Hyprland shows a plain dark background (`misc:background_color`) instead of its built-in anime wallpaper/logo while it starts.
+2. **hyprpaper draws `default.png` straight away** (from `hyprpaper.conf`). `themectl` does not re-send the wallpaper to hyprpaper at login, because reloading the same image would flicker.
+3. **The accent is calculated and applied before Waybar starts.** `themectl init` calculates the accent from `default.png`, writes the color files and waits for every tool's `update_theme.sh` to finish.
+4. **Waybar starts last**, so it opens already in the final accent color and never has to reload its styling.
+
+This is wired up in `config/hypr/conf/autostart.conf` (`themectl init; waybar`). The `;` is deliberate, so Waybar still starts even if `themectl init` fails.
+
+---
+
 ## Installation
 
 ### Requirements

@@ -1,40 +1,53 @@
 # functions.sh
 
+# init_state — runs once per login (see conf/autostart.conf).
+#
+# DEFAULT WALLPAPER BEHAVIOUR:
+#   Every login starts on themes/wallpapers/default.png, NOT on whatever was used
+#   last session. To change the login wallpaper, just overwrite that one file:
+#       cp anime_wallpaper2.png default.png
+#   (so one duplicate exists, but the original keeps its own name and stays in the cycle).
+#   The accent colour is recalculated from default.png on EVERY login, so replacing
+#   the image can never leave a stale colour behind.
+#   default.* is excluded from the Super+W cycle (see _list_wallpapers) because it is
+#   always a copy of a wallpaper that is already in the cycle.
+#   hyprpaper.conf points at the same default.png so its first frame matches.
+#   Only the exact name default.png is used here - a stray default.jpg etc. is ignored.
+#   Fallback: if default.png is missing, the first wallpaper (alphabetical) is used.
 init_state() {
     #initialise state files if they don't exist yet
     [ -f "$CURRENT_FILE_WALLPAPER" ] || echo "0" > "$CURRENT_FILE_WALLPAPER"
     [ -f "$CURRENT_FILE_COLOR"     ] || echo "0" > "$CURRENT_FILE_COLOR"
 
-    # Collect assets
-    local wallpapers colors
-    mapfile -t wallpapers < <(_list_wallpapers)
-    mapfile -t colors     < <(_list_colors)
+    local login_wp="$WALLPAPER_DIR/default.png"
 
-    if [ ${#wallpapers[@]} -eq 0 ]; then
-        echo "themectl: no wallpapers found in $WALLPAPER_DIR" >&2
-        exit 1
+    if [ ! -f "$login_wp" ]; then
+        # No default.png: fall back to the first wallpaper in the cycle
+        local wallpapers
+        mapfile -t wallpapers < <(_list_wallpapers)
+        if [ ${#wallpapers[@]} -eq 0 ]; then
+            echo "themectl: no default.png and no wallpapers found in $WALLPAPER_DIR" >&2
+            exit 1
+        fi
+        login_wp="${wallpapers[0]}"
+        echo "themectl: default.png not found, falling back to $(basename "$login_wp")" >&2
     fi
 
-    #read stored data
-    local wp_idx color_idx
-    wp_idx=$(read_index "$CURRENT_FILE_WALLPAPER")
-    color_idx=$(read_index "$CURRENT_FILE_COLOR")
+    # Only records the choice; update_theme.sh (run by themectl after init) applies it.
+    apply_wallpaper "$login_wp"
 
-    #normalize the indices and apply wallpaper and color
-    wp_idx=$(( wp_idx % ${#wallpapers[@]} ))
-    color_idx=$(( ${#colors[@]} > 0 ? color_idx % ${#colors[@]} : 0 ))
-
-    apply_wallpaper "${wallpapers[$wp_idx]}"
-
-    if [ ${#colors[@]} -gt 0 ]; then
-        local hex
-        hex=$(< "${colors[$color_idx]}")
-        apply_color "$hex"
+    # hyprpaper.conf already loads default.png, so re-sending it via hyprctl would only
+    # cause a visible reload flicker. Tell hypr/update_theme.sh to skip that step.
+    # (Not set in the fallback case: there hyprpaper really needs to be told.)
+    if [ "$login_wp" = "$WALLPAPER_DIR/default.png" ]; then
+        export THEMECTL_SKIP_WALLPAPER_RELOAD=1
     fi
 
-    #dsplay a status
-    echo "themectl: init — wallpaper[${wp_idx}]=$(basename "${wallpapers[$wp_idx]}")"
-    [ ${#colors[@]} -gt 0 ] && echo "themectl: init — color[${color_idx}]=$(< "${colors[$color_idx]}")"
+    # Accent is derived fresh from the wallpaper, same as next_wallpaper does.
+    accent_from_wallpaper "$login_wp"
+    apply_color "$accent_hex_from_wallpaper"
+
+    echo "themectl: init — wallpaper=$(basename "$login_wp") accent=$accent_hex_from_wallpaper"
 }
 
 next_wallpaper() {
@@ -53,7 +66,7 @@ next_wallpaper() {
 
     accent_from_wallpaper "${wallpapers[$idx]}"
     apply_color "$accent_hex_from_wallpaper"   
-    echo "themectl: auto color → $hex"
+    echo "themectl: auto color → $accent_hex_from_wallpaper"
 }
 
 next_color() {
@@ -100,7 +113,9 @@ print_status() {
 }
 
 #HELPER functions
-#list wallpaper files sorted consistently (exclude default.* — it's a fallback)
+#list wallpaper files sorted consistently.
+#default.* is excluded on purpose: default.png is just a copy of one of the other
+#wallpapers (used at login, see init_state), so it would appear twice in the cycle.
 _list_wallpapers() {
     local f
     shopt -s nullglob
