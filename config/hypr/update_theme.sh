@@ -1,6 +1,5 @@
 # config/hypr/update_theme.sh
 DOTFILES_ROOT="$1"
-WALLPAPER=$(< "$DOTFILES_ROOT/config/hypr/.state/current_wallpaper")
 ACCENT=$(< "$DOTFILES_ROOT/themes/accent.color")
 WALLPAPER=$(< "$DOTFILES_ROOT/config/hypr/.state/current_wallpaper_name")
 WALLPAPER_PATH="$DOTFILES_ROOT/themes/wallpapers/$WALLPAPER"
