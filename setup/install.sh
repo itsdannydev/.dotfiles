@@ -53,6 +53,31 @@ for entry in "${modules[@]}"; do
     fi
 done
 
+# Default wallpaper
+# hyprpaper.conf and "themectl init" expect themes/wallpapers/default.png to exist.
+# default.png is gitignored (it's the user's own login wallpaper), so a fresh clone
+# only has default.placeholder.png - copy it over, but NEVER overwrite an existing
+# default.png (this installer is also re-run after every "git pull").
+WALLPAPER_DIR="$DOTFILES_DIR/themes/wallpapers"
+printf "%b==> %s%b\n" "$BLUE" "Default wallpaper" "$RESET"
+echo "Initializing default wallpaper..."
+if [[ -f "$WALLPAPER_DIR/default.png" ]]; then
+    echo "default.png already exists - leaving it untouched."
+elif [[ -f "$WALLPAPER_DIR/default.placeholder.png" ]]; then
+    cp "$WALLPAPER_DIR/default.placeholder.png" "$WALLPAPER_DIR/default.png"
+    echo "Copied default.placeholder.png -> default.png"
+else
+    echo "default.placeholder.png not found - skipping."
+fi
+echo
+echo "To use your own wallpapers:"
+echo "  1. Put your images in:  $WALLPAPER_DIR/"
+echo "     (use Super+W to cycle through them)"
+echo "  2. To make one the wallpaper you log in with, overwrite default.png (must be a PNG):"
+echo "       cp \"$WALLPAPER_DIR/<your-wallpaper>.png\" \"$WALLPAPER_DIR/default.png\""
+echo "     The original keeps its name; default.png is just a copy of it."
+echo
+
 line
 center "Installation Complete"
 line

@@ -21,6 +21,14 @@ init_state() {
 
     local login_wp="$WALLPAPER_DIR/default.png"
 
+    # default.png is gitignored (the user's own file); only default.placeholder.png is
+    # tracked. If default.png is missing (eg: installer not run), restore it from the
+    # placeholder. Never overwrites an existing default.png.
+    if [ ! -f "$login_wp" ] && [ -f "$WALLPAPER_DIR/default.placeholder.png" ]; then
+        cp "$WALLPAPER_DIR/default.placeholder.png" "$login_wp"
+        echo "themectl: default.png was missing, copied default.placeholder.png" >&2
+    fi
+
     if [ ! -f "$login_wp" ]; then
         # No default.png: fall back to the first wallpaper in the cycle
         local wallpapers

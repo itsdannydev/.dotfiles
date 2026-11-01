@@ -4,11 +4,10 @@ themes/wallpapers/*.jpeg
 themes/wallpapers/*.png
 themes/wallpapers/*.webp
 
-# Re-include default wallpaper
-!themes/wallpapers/default.jpg
-!themes/wallpapers/default.jpeg
-!themes/wallpapers/default.png
-!themes/wallpapers/default.webp
+# default.png is YOUR login wallpaper, so it is ignored like every other wallpaper
+# (changing it never touches git). Only the tiny placeholder is tracked: the installer
+# copies it to default.png on a fresh install (see setup/install.sh).
+!themes/wallpapers/default.placeholder.png
 
 # Ignore state files
 config/hypr/.state/

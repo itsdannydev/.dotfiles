@@ -75,8 +75,9 @@ Every login starts on `themes/wallpapers/default.png`, not on whatever wallpaper
   cp themes/wallpapers/anime_wallpaper.png themes/wallpapers/default.png
   ```
 
-- If `default.png` is missing, the first wallpaper (alphabetically) is used instead and a warning is printed.
-- Only `default.png` is tracked by git. Every other wallpaper is gitignored, so on a fresh clone the default is the only wallpaper until you add your own.
+- **`default.png` is gitignored**, like every other wallpaper, so changing it never touches git and the repo never grows. The only wallpaper tracked by git is the tiny `default.placeholder.png`.
+- **On a fresh install** the installer copies `default.placeholder.png` to `default.png` (it never overwrites an existing `default.png`, so re-running the installer after `git pull` is safe). You'll see the placeholder until you set your own, as described above. Add your wallpapers to `themes/wallpapers/` and use `Super + W` to cycle through them.
+- If `default.png` is missing at login, `themectl init` restores it from the placeholder. Without a placeholder it falls back to the first wallpaper (alphabetically) and prints a warning.
 - `hyprpaper.conf` uses the absolute path `~/.dotfiles/themes/wallpapers/default.png`, so the repo is expected to be cloned at `~/.dotfiles`.
 
 ### How the login sequence avoids flicker
