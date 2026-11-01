@@ -28,6 +28,7 @@ mkdir -p "$BACKUP_DIR"
 
 # module definiton
 modules=(
+    "Fonts:fonts.sh"
     "Neovim:neovim.sh"
     "Hyprland:hyprland.sh"
     "Bash:bash.sh"

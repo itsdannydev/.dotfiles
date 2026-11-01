@@ -112,6 +112,14 @@ This is wired up in `config/hypr/conf/autostart.conf` (`themectl init; waybar`).
 - Git
 - Chromium Browser (if you want desktop entries)
 
+### Fonts
+
+Waybar and Wofi use the **JetBrainsMono Nerd Font**, which they look up by name, so it only has to be installed on the system. The installer's `Fonts` step handles this:
+
+- skips everything if the font is already in `~/.local/share/fonts/nerd`
+- otherwise copies the 4 bundled styles from `assets/fonts/nerd` (Nerd Fonts v3.4.0) there and refreshes the font cache with `fc-cache`
+- works offline, nothing is downloaded
+
 ### Quick Start
 
 - Clone the repository:
